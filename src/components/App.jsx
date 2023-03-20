@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Section from './Section/Section';
 import Statistics from './Statistics/Statistics';
 import Notification from './Notification/Notification';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 
 export class App extends Component {
   state = { 
@@ -9,6 +10,12 @@ export class App extends Component {
     neutral: 0,
     bad: 0
   } 
+
+  handleLeaveFeedback = (option) => {
+    this.setState(prevState => ({
+      [option]: prevState[option] + 1
+    }))
+  }
   
   countTotalFeedback = () => {
     const { good, neutral, bad } = this.state
@@ -23,10 +30,17 @@ export class App extends Component {
 
   render() { 
     const { good, neutral, bad } = this.state
-    const total = good +neutral + bad
+    const total = good + neutral + bad
+    const options = Object.keys(this.state);
+
     return (
       <>
-        <Section title="Please leave feedback" />
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={options}
+            onLeaveFeedback={this.handleLeaveFeedback}
+          />
+        </Section>
         
         {total > 0 ? (
           <Section title="Statistics">
