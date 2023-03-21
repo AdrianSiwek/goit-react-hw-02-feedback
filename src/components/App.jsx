@@ -11,7 +11,7 @@ export class App extends Component {
     bad: 0
   } 
 
-  handleLeaveFeedback = (option) => {
+  handleLeaveFeedback = option => {
     this.setState(prevState => ({
       [option]: prevState[option] + 1
     }))
@@ -25,12 +25,12 @@ export class App extends Component {
   countPositiveFeedbackPercentage = () => {
     const { good, neutral, bad } = this.state;
     const total = good + neutral + bad;
-    return Math.round((good *100)/total);
-  }
+    return Math.round((good * 100) / total);
+  };
 
   render() { 
     const { good, neutral, bad } = this.state
-    const total = good + neutral + bad
+    const total = this.countTotalFeedback();
     const options = Object.keys(this.state);
 
     return (
@@ -48,8 +48,8 @@ export class App extends Component {
               good={good}
               neutral={neutral}
               bad={bad}
-              total={this.countTotalFeedback}
-              positivePercentage={this.countPositiveFeedback}
+              total={total}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
             />
           </Section>
         ) : (
